@@ -1,0 +1,9 @@
+{
+  "sampleData": {
+    "1f81fdb0-dfb6-44a0-9bf8-9ec142faa294": {
+      "vars-statusCode": "sample_data/defaultstringtype.dwl",
+      "vars-headerAttributes": "sample_data/json.json",
+      "vars-currentFlow": "sample_data/defaultstringtype_1.dwl"
+    }
+  }
+}
