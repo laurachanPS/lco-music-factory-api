@@ -60,6 +60,13 @@
 			<version>1.3.7</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
+		<dependency>
+			<groupId>e17da99a-7d16-4c7a-a30e-cc8d62cfac3e</groupId>
+			<artifactId>lco-music-factory-api</artifactId>
+			<version>1.0.0</version>
+			<classifier>raml</classifier>
+			<type>zip</type>
+		</dependency>
 	</dependencies>
 
 	<repositories>

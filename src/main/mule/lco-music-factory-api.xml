@@ -1,35 +1,761 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-	xmlns:PS-Logger="http://www.mulesoft.org/schema/mule/PS-Logger"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
-http://www.mulesoft.org/schema/mule/PS-Logger http://www.mulesoft.org/schema/mule/PS-Logger/current/mule-PS-Logger.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-
-	<apikit:config outboundHeadersMapName="outboundHeadersMapName" httpStatusVarName="httpStatus" doc:name="Router" doc:id="d898061d-7861-457f-accb-be2ef941b992" name="Router" raml="api/xlco-music-factory-api.raml" />
-	<flow name="xlco-music-factory-api-main" doc:id="360ec8d1-c5e9-4f56-99da-6877ba87ff4c" >
-		<http:listener doc:name="Listener" doc:id="8aeaffe6-3892-4377-a2c0-609416062b35" config-ref="http-listener-config" path="/api/*">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+    <apikit:config name="lco-music-factory-api-config" api="resource::e17da99a-7d16-4c7a-a30e-cc8d62cfac3e:lco-music-factory-api:1.0.0:raml:zip:lco-music-factory-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <flow name="lco-music-factory-api-main">
+        <http:listener path="/api/*" config-ref="http-listener-config">
             <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:response>
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:error-response>
-		</http:listener>
-        <set-variable variableName="headerAttributes" value="#[%dw 2.0
+        </http:listener>
+        <apikit:router config-ref="lco-music-factory-api-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:BAD_REQUEST">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Bad request"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">400</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Method not allowed"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">405</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not acceptable"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">406</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Unsupported media type"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">415</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not Implemented"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">501</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="lco-music-factory-api-console">
+        <http:listener path="/console/*" config-ref="http-listener-config">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="lco-music-factory-api-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="put:\albums\(albumId):application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="albumId">attributes.uriParams.'albumId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
-	correlationId: message.attributes.headers.correlation_id,
-	clientId: message.attributes.headers.client_id,
-	clientSecret: message.attributes.headers.client_secret
-}]" doc:name="headerAttributes"/>
-		<set-variable value="xlco-music-factory-api-main::apiKitRouter" doc:name="currentFlow" doc:id="3e8e3f31-8d25-4f7c-b211-ae3c52530d92" variableName="currentFlow"/>
-		<apikit:router doc:name="APIkit Router" doc:id="e474b7e2-127a-4371-af30-b98e39d0bc3c" config-ref="Router"/>
-	</flow>
-	<flow name="xlco-music-factory-api-console" doc:id="7d0f944e-387b-4a6f-94c1-de21e517ef93" >
-		<http:listener doc:name="Listener" doc:id="d21e0e9b-9c88-45dd-a6bc-98f84ef8852a" config-ref="http-listener-config" path="/console/*"/>
-		<apikit:console doc:name="APIkit Console" doc:id="16be3bd8-ff97-461c-86df-566605fbfe96" config-ref="Router"/>
-	</flow>
+  statusCode: 200,
+  message: "The album has been updated."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="put:\artists\(artistId):application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The artist has been updated."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="put:\songs\(songId):application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="songId">attributes.uriParams.'songId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The song has been updated."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="delete:\albums\(albumId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="albumId">attributes.uriParams.'albumId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The album has been deleted."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="delete:\artists\(artistId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The artist has been deleted."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="delete:\songs\(songId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="songId">attributes.uriParams.'songId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The song has been deleted."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="patch:\artists\(artistId):application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 201,
+  message: "SUCCESS",
+  bioUrl: "https://last.fm/music/The Beatles/+wiki",
+  recordsUpdated: 3
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\albums:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESS",
+  searchCriteria: "Let it Be",
+  albums: [
+    {
+      albumId: 1,
+      albumTitle: "The Beatles",
+      genre: "Rock",
+      publicationDate: "1968-11-22",
+      artistId: 1,
+      groupName: "The Beatles"
+    }, 
+    {
+      albumId: 4,
+      albumTitle: "Let It Be",
+      genre: "Rock",
+      publicationDate: "2000-05-08",
+      artistId: 1,
+      groupName: "The Beatles"
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\artists:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESS",
+  searchCriteria: "[groupName: 'Telegraph Canyon', ]",
+  artists: [
+    {
+      artistId: 48,
+      groupName: "Telegraph Canyon",
+      lastName: "Hickman",
+      firstName: "Johnny",
+      dateOfBirth: "1988-01-29"
+    }, 
+    {
+      artistId: 49,
+      groupName: "Telegraph Canyon",
+      lastName: "Harrison",
+      firstName: "Teddy",
+      mi: "B",
+      dateOfBirth: "1982-03-21",
+      dateOfDeath: "2015-03-22"
+    }, 
+    {
+      artistId: 50,
+      groupName: "Telegraph Canyon",
+      lastName: "Hickman",
+      firstName: "Jack",
+      dateOfBirth: "1988-01-29"
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\catalog:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESS",
+  catalog: [
+    {
+      album: {
+        albumTitle: "The Beatles",
+        publicationDate: "1968-11-22",
+        groupName: "The Beatles",
+        artists: [
+          {
+            firstName: "John",
+            lastName: "Lennon",
+            dateOfBirth: "1940-10-09",
+            dateOfDeath: "1980-12-08"
+          }, 
+          {
+            firstName: "Paul",
+            lastName: "McCartney",
+            dateOfBirth: "1942-02-16"
+          }, 
+          {
+            firstName: "George",
+            lastName: "Harrison",
+            dateOfBirth: "1943-03-25",
+            dateOfDeath: "2001-11-29"
+          }
+        ],
+        songs: [
+          {
+            songTitle: "Back in the U.S.S.R",
+            genre: "Rock",
+            songDuration: "3:36",
+            songWriters: [
+              {
+                writer: "Paul McCartney"
+              }
+            ]
+          }, 
+          {
+            songTitle: "Dear Prudence",
+            genre: "Rock",
+            duration: "3:54",
+            songWriters: [
+              {
+                writer: "John Lennon"
+              }
+            ]
+          }, 
+          {
+            songTitle: "Glass Onion",
+            genre: "Rock",
+            duration: "3:48",
+            songWriters: [
+              {
+                writer: "John Lennon"
+              }
+            ]
+          }, 
+          {
+            songTitle: "Ob-La-Di, Ob-La-Da",
+            genre: "Rock",
+            duration: "3:38",
+            songWriters: [
+              {
+                writer: "Paul McCartney"
+              }
+            ]
+          }, 
+          {
+            songTitle: "Wild Honey Pie",
+            genre: "Rock",
+            duration: "2:26",
+            songWriters: [
+              {
+                writer: "Paul McCartney"
+              }
+            ]
+          }
+        ]
+      }
+    }, 
+    {
+      album: {
+        albumTitle: "Let it Be",
+        publicationDate: "1970-05-08",
+        groupName: "The Beatles",
+        artists: [
+          {
+            firstName: "John",
+            lastName: "Lennon",
+            dateOfBirth: "1940-10-09",
+            dateOfDeath: "1980-12-08"
+          }, 
+          {
+            firstName: "Paul",
+            lastName: "McCartney",
+            dateOfBirth: "1942-02-16"
+          }, 
+          {
+            firstName: "George",
+            lastName: "Harrison",
+            dateOfBirth: "1943-03-25",
+            dateOfDeath: "2001-11-29"
+          }
+        ],
+        songs: [
+          {
+            songTitle: "Two of Us",
+            genre: "Rock",
+            songDuration: "3:36",
+            songWriters: [
+              {
+                writer: "John Lennon"
+              }
+            ]
+          }, 
+          {
+            songTitle: "Dig A Pony",
+            genre: "Rock",
+            duration: "3:54",
+            songWriters: [
+              {
+                writer: "John Lennon"
+              }
+            ]
+          }, 
+          {
+            songTitle: "Across the Universe",
+            genre: "Rock",
+            duration: "3:48",
+            songWriters: [
+              {
+                writer: "John Lennon"
+              }, 
+              {
+                writer: "Paul McCartney"
+              }
+            ]
+          }, 
+          {
+            songTitle: "The Long and Winding Road",
+            genre: "Rock",
+            duration: "3:38",
+            songWriters: [
+              {
+                writer: "John Lennon"
+              }
+            ]
+          }, 
+          {
+            songTitle: "I Me Mine",
+            genre: "Rock",
+            duration: "2:26",
+            songWriters: [
+              {
+                writer: "George Harrison"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\artists\(artistId)\songs:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESSFUL",
+  artistSongs: [
+    {
+      songTitle: "Hey Jude",
+      publicationDate: "1968-08-26",
+      genre: "Rock",
+      artist: {
+        groupName: "The Beatles",
+        firstName: "John",
+        lastName: "Lennon"
+      }
+    }, 
+    {
+      songTitle: "Magical Mystery Tour",
+      publicationDate: "1967-03-15",
+      genre: "Rock",
+      artist: {
+        groupName: "The Beatles",
+        firstName: "John",
+        lastName: "Lennon"
+      }
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\songs:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESSFUL",
+  searchCriteria: "Kill",
+  songs: [
+    {
+      songId: 13,
+      songTitle: "I May Kill Myself",
+      genre: "Other",
+      publicationDate: "1942-01-02",
+      duration: "13:52",
+      albumId: 8,
+      albumName: "Harry Belts a Tune",
+      songWriters: [
+        {
+          writer: "Harry Carry"
+        }
+      ]
+    }, 
+    {
+      songId: 13,
+      songTitle: "Don't Kill Yourself",
+      genre: "Rock",
+      publicationDate: "1951-01-02",
+      duration: "13:52",
+      albumId: 8,
+      albumName: "Saving A Life Today",
+      songWriters: [
+        {
+          writer: "Will Meaning"
+        }
+      ]
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\albums\(albumId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="albumId">attributes.uriParams.'albumId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESS",
+  album: {
+    albumTitle: "Let It Be (CD)",
+    genre: "Rock",
+    publicationDate: "2000-05-18",
+    artistId: 1,
+    artistName: "The Beatles"
+  }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\artists\(artistId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESSFUL",
+  artist: {
+    groupName: "Grateful Dead",
+    firstName: "Garcia",
+    lastName: "Gerry",
+    dateOfBirth: "1948-01-07"
+  }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\songs\(songId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="songId">attributes.uriParams.'songId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESS",
+  song: {
+    songTitle: "Don't Mess With Texas",
+    publicationDate: "2016-10-05",
+    genre: "Pop",
+    duration: "3:15",
+    songId: 15,
+    artistId: 5,
+    songWriters: [
+      {
+        writer: "Ted Cruz"
+      }, 
+      {
+        writer: "Greg Abbott"
+      }
+    ]
+  }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\albums:application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 201,
+  message: "SUCCESS",
+  albums: [
+    {
+      albumId: 1001,
+      albumTitle: "Telegraph Canyon I",
+      genre: "Pop",
+      publicationDate: "2016-01-29",
+      artistId: 5,
+      artistName: "His Majesty"
+    }, 
+    {
+      albumId: 1002,
+      albumTitle: "Telegraph Canyon II",
+      genre: "Pop",
+      publicationDate: "2018-01-29",
+      artistId: 5,
+      artistName: "Prince"
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\artists:application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 202,
+  message: "ACCEPTED",
+  results: {
+    addedCounts: 1,
+    addedArtists: [
+      {
+        artistId: 51,
+        groupName: "Telegraph Canyon",
+        lastName: "Hickman",
+        firstName: "Jill",
+        dateOfBirth: "1988-01-29"
+      }
+    ],
+    duplicatedCounts: 1,
+    duplicatedArtists: [
+      {
+        artistId: 49,
+        groupName: "Telegraph Canyon",
+        lastName: "Harrison",
+        firstName: "Ted",
+        mi: "B",
+        dateOfBirth: "1982-03-21"
+      }
+    ]
+  }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\songs:application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 201,
+  message: "SUCCESS",
+  songs: [
+    {
+      songTitle: "Como Anda La Cucaracha",
+      publicationDate: "1954-01-07",
+      duration: "4:29",
+      genre: "Mariachi",
+      albumId: 6,
+      artistId: 101
+    }, 
+    {
+      songTitle: "La Bamba",
+      publicationDate: "1959-03-30",
+      duration: "3:52",
+      genre: "Other",
+      albumId: 7,
+      artistId: 102
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
 </mule>

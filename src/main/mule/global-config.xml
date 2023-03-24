@@ -27,7 +27,7 @@ http://www.mulesoft.org/schema/mule/sps-logger http://www.mulesoft.org/schema/mu
 	</secure-properties:config>
 
     <!-- This is the configuration to let this mule app talk to API Manager's corresponding API -->
-    <api-gateway:autodiscovery apiId="${api.apiId}" doc:name="API Autodiscovery" doc:id="64e53ea9-8f3d-4165-8451-fc9e075835f3" flowRef="xlco-music-factory-api-main" />
+    <api-gateway:autodiscovery apiId="${api.apiId}" doc:name="API Autodiscovery" doc:id="64e53ea9-8f3d-4165-8451-fc9e075835f3" flowRef="lco-music-factory-api-main" ignoreBasePath="true"/>
 
     <!-- Added to expedite the Bootcamp project archetype -->
 	<global-property doc:name="Global Property" doc:id="0a76d4c0-842d-40b6-9fc5-2f5cf73b0360" name="secureKey" value="password" />
