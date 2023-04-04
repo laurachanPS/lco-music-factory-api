@@ -1,0 +1,65 @@
+#%RAML 1.0 Library
+usage: Used as the source of resources dataTypes related to the song
+types:
+
+  songsResponseForGet:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        required: true
+      message:
+        type: string
+        required: true
+      songs:
+        required: true
+        type: array
+        items: !include songDataType.raml
+    
+  songResponseGeneric:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+      message:
+        type: string
+        required: true
+
+
+  songsResponseForInsert:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        example: 201
+      message:
+        type: string
+        required: true
+        example: SUCCESSFUL
+      songs:
+        required: true
+        type: array
+        items: !include songDataType.raml
+
+  songResponseForGet:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        required: true
+        example: 200
+      message:
+        type: string
+        required: true
+        example: SUCCESSFUL
+      song:
+        required: true
+        type: !include songDataType.raml

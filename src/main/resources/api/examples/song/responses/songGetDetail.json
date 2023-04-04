@@ -1,0 +1,20 @@
+{
+  "statusCode": 200,
+  "message": "SUCCESS",
+  "song": {
+    "songTitle": "Don't Mess With Texas",
+    "publicationDate": "2016-10-05",
+    "genre": "Pop",
+    "duration": "3:15",
+    "songId": 15,
+    "artistId": 5,
+    "songWriters": [
+      {
+        "writer": "Ted Cruz"
+      },
+      {
+        "writer": "Greg Abbott"
+      }
+    ]
+  }
+}

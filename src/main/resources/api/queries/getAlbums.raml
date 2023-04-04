@@ -1,0 +1,10 @@
+#%RAML 1.0 Library
+traits:
+  queryParams:
+    queryParameters:
+      albumTitle:
+        description: "Provide at least 3 characters of the album Title to search"
+        required: true
+        minLength: 3
+        type: string
+        example: "Let it Be"

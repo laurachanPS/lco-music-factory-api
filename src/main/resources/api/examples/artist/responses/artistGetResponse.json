@@ -1,0 +1,10 @@
+{
+  "statusCode": 200,
+  "message": "SUCCESSFUL",
+  "artist": {
+    "groupName": "Grateful Dead",
+    "firstName": "Garcia",
+    "lastName": "Gerry",
+    "dateOfBirth": "1948-01-07"
+  }
+}

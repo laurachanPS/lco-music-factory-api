@@ -1,0 +1,28 @@
+#%RAML 1.0 Library
+types:
+
+  songsDataTypeForGet:
+    type: object
+    properties: 
+      songs:
+        required: true
+        type: array
+        items: !include songDataType.raml
+    
+  songWriterName:
+    type: !include songWriterDataType.raml
+
+  songsDataTypeForInsert:
+    type: object
+    properties: 
+      songs:
+        required: true
+        type: array
+        items: !include songDataType.raml
+
+  songDataTypeForUpdate:
+    type: object
+    properties: 
+      song:
+        required: true
+        type: !include songDataType.raml

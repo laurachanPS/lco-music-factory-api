@@ -1,0 +1,26 @@
+{
+  "statusCode": 200,
+  "message": "SUCCESSFUL",
+  "artistSongs": [
+    {
+      "songTitle": "Hey Jude",
+      "publicationDate": "1968-08-26",
+      "genre": "Rock",
+      "artist": {
+        "groupName": "The Beatles",
+        "firstName": "John",
+        "lastName": "Lennon"
+      }
+    },
+    {
+      "songTitle": "Magical Mystery Tour",
+      "publicationDate": "1967-03-15",
+      "genre": "Rock",
+      "artist": {
+        "groupName": "The Beatles",
+        "firstName": "John",
+        "lastName": "Lennon"
+      }
+    }
+  ]
+}

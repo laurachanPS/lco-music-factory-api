@@ -1,0 +1,64 @@
+#%RAML 1.0 Library
+usage: Music Factory API
+traits:
+  correlationRequired:
+    headers:
+      correlation_id:
+        type: string
+        required: true
+  clientIdRequired:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+    responses:
+      401:
+        description: Unauthorized or invalid client application credentials
+      500:
+        description: Bad response from authorization server, or WSDL SOAP Fault error
+  errorResponseRequired:
+    responses:
+      404:
+        description: Data not found
+        body:
+          application/json:
+            type: !include error-responses/schemas/error-response-dataType.raml
+            example: !include error-responses/examples/data-not-found-example.raml 
+      400:
+        description: Bad request
+        body:
+          application/json:
+            type: !include error-responses/schemas/error-response-dataType.raml
+            example: !include error-responses/examples/bad-request-example.raml
+      500:
+        description: Internal Server Error
+        body:
+          application/json:
+            type: !include error-responses/schemas/error-response-dataType.raml
+            example: !include error-responses/examples/internal-server-error-example.raml
+      405:
+        description: Method not allowed
+        body:
+          application/json:
+            type: !include error-responses/schemas/error-response-dataType.raml
+            example: !include error-responses/examples/method-not-allowed-example.raml
+      406:
+        description: Not acceptable
+        body:
+          application/json:
+            type: !include error-responses/schemas/error-response-dataType.raml
+            example: !include error-responses/examples/not-acceptable-example.raml
+      501:
+        description: Not implemented
+        body:
+          application/json:
+            type: !include error-responses/schemas/error-response-dataType.raml
+            example: !include error-responses/examples/not-implemented-example.raml
+      415:
+        description: Not implemented
+        body:
+          application/json:
+            type: !include error-responses/schemas/error-response-dataType.raml
+            example: !include error-responses/examples/unsupported-type-example.raml
+

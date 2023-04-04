@@ -1,0 +1,17 @@
+{
+  "statusCode": 201,
+  "message": "SUCCESS",
+  "song": {
+    "songTitle": "What Is Going On",
+    "duration": "5:45",
+    "genre": "Pop",
+    "publicationDate": "2017-05-23",
+    "albumId": 8,
+    "artistName" : "His Majesty",
+    "songWriters": [
+      {
+        "writer": "Kevin King"
+      }
+    ]
+  }
+}

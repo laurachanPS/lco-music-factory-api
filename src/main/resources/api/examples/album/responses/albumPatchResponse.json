@@ -1,0 +1,10 @@
+{
+  "statusCode": 201,
+  "message": "SUCCESS",
+  "album": {
+    "albumTitle": "Telegraph Canyon I",
+    "genre": "Rock",
+    "publicationDate": "2015-12-01",
+    "artistName" : "Senor Hughlett"
+  }
+}

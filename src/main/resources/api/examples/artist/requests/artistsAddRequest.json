@@ -1,0 +1,17 @@
+{
+  "artists": [
+    {
+      "groupName": "Telegraph Canyon",
+      "lastName": "Hickman",
+      "firstName": "Jill",
+      "dateOfBirth": "1988-01-29"
+    },
+    {
+      "groupName": "Telegraph Canyon",
+      "lastName": "Harrison",
+      "firstName": "Ted",
+      "mi": "B",
+      "dateOfBirth": "1982-03-21"
+    }
+  ]
+}

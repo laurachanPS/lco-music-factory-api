@@ -1,0 +1,11 @@
+  {
+    "statusCode": 200,
+    "message": "SUCCESS",
+    "album": {
+      "albumTitle": "Let It Be (CD)",
+      "genre": "Rock",
+      "publicationDate": "2000-05-18",
+      "artistId": 1,
+      "artistName": "The Beatles"
+    }
+  }

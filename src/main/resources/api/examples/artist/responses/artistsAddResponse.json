@@ -1,0 +1,27 @@
+{
+  "statusCode": 202,
+  "message": "ACCEPTED",
+  "results": {
+    "addedCounts": 1,
+    "addedArtists": [
+      {
+        "artistId": 51,
+        "groupName": "Telegraph Canyon",
+        "lastName": "Hickman",
+        "firstName": "Jill",
+        "dateOfBirth": "1988-01-29"
+      }
+    ],
+    "duplicatedCounts": 1,
+    "duplicatedArtists": [
+      {
+        "artistId": 49,
+        "groupName": "Telegraph Canyon",
+        "lastName": "Harrison",
+        "firstName": "Ted",
+        "mi": "B",
+        "dateOfBirth": "1982-03-21"
+      }
+    ]
+  }
+}

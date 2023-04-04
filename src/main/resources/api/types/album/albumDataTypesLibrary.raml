@@ -1,0 +1,28 @@
+#%RAML 1.0 Library
+types:
+
+  albumsDataTypeForGet:
+    type: object
+    properties: 
+      albums:
+        required: true
+        type: array
+        items: !include albumDataType.raml
+
+  albumDataType:
+    type: !include albumDataType.raml
+    
+  albumsDataTypeForInsert:
+    type: object
+    properties: 
+      albums:
+        required: true
+        type: array
+        items: !include albumDataType.raml
+
+  albumDataTypeForUpdate:
+    type: object
+    properties: 
+      album:
+        required: true
+        type: !include albumDataType.raml

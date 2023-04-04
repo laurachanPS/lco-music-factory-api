@@ -1,0 +1,156 @@
+#%RAML 1.0
+title: LCO-Music Factory API
+baseUri: http://localhost:8081/
+version: v1.0
+
+uses:
+  albumResponses: types/album/albumResponseTypesLibrary.raml
+  albumResources: types/album/albumDataTypesLibrary.raml
+  albumQueries: queries/getAlbums.raml
+  commonTraits: commonTraits.raml
+  artistResponses: types/artist/artistResponseTypesLibrary.raml
+  artistResources: types/artist/artistDataTypesLibrary.raml
+  artistQueries: queries/getArtists.raml
+  songResponses: types/song/songResponseTypesLibrary.raml
+  songResources: types/song/songDataTypesLibrary.raml
+  songQueries: queries/getSongs.raml
+  catalogResponses: types/catalog/catalogResponseTypesLibrary.raml
+  catalogQueries: queries/getCatalog.raml
+
+
+resourceTypes:
+  collection: !include resourceTypes/collection.raml
+  item: !include resourceTypes/item.raml
+
+/catalog:
+  description: The catalog provides the means to return all of the albums, sogns and artists associated with a group name
+  is: [commonTraits.clientIdRequired, commonTraits.correlationRequired, commonTraits.errorResponseRequired]
+  get:
+    is: [catalogQueries.queryParams]
+    responses:
+      200:
+        body:
+          application/json:
+            type: catalogResponses.catalogResponseForGet
+            examples:
+              example: !include examples/catalog/catalogGetResponse.json
+
+/songs:
+  description: The songs resource exposes methods to retrieve and add collections of songs
+  is: [commonTraits.clientIdRequired, commonTraits.correlationRequired, commonTraits.errorResponseRequired]
+  type:
+    collection:
+      getResponseType: songResponses.songsResponseForGet
+      getResponseJson: !include examples/song/responses/songsGetResponse.json
+      postBodyType: songResources.songsDataTypeForInsert
+      postResponseType: songResponses.songsResponseForInsert
+      postBodyJson: !include examples/song/requests/songsAddRequest.json
+      postResponseJson: !include examples/song/responses/songsAddResponse.json
+  get:
+      is: [songQueries.queryParams]
+  post:
+
+  /{songId}:
+    description: The songId resource exposes methods to retrieve a specific song or update, delete it
+    is: [commonTraits.clientIdRequired, commonTraits.correlationRequired, commonTraits.errorResponseRequired]
+    type:
+      item:
+        getResponseType: songResponses.songResponseForGet
+        getResponseJson: !include examples/song/responses/songGetDetail.json
+        putBodyType: songResources.songDataTypeForUpdate
+        putBodyJson: !include examples/song/requests/songPutRequest.json
+        putResponseType: songResponses.songResponseGeneric
+        deleteResponseType: songResponses.songResponseGeneric
+    get:
+      
+    put:
+      
+    delete:
+
+/artists:
+  description: The artists resource exposes methods to retrieve and add artists
+  is: [commonTraits.clientIdRequired, commonTraits.correlationRequired, commonTraits.errorResponseRequired]
+  type:
+    collection:
+      getResponseType: artistResponses.artistsResponseForGet
+      getResponseJson: !include examples/artist/responses/artistsGetResponse.json 
+      postBodyType: artistResources.artistsDataTypeForInsert
+      postResponseType: artistResponses.artistsResponseForInsert 
+      postBodyJson: !include examples/artist/requests/artistsAddRequest.json 
+      postResponseJson: !include examples/artist/responses/artistsAddResponse.json
+  get:
+      is: [artistQueries.queryParams]
+  post:
+
+  /{artistId}:
+    description: The artistId resource exposes methods to retrieve a specific artist or update, delete it
+    is: [commonTraits.clientIdRequired, commonTraits.correlationRequired, commonTraits.errorResponseRequired]
+    type:
+      item:
+        getResponseType: artistResponses.artistResponseForGet
+        getResponseJson: !include examples/artist/responses/artistGetResponse.json
+        putBodyType: artistResources.artistDataTypeForUpdate
+        putBodyJson: !include examples/artist/requests/artistPutRequest.json
+        putResponseType: artistResponses.artistResponseGeneric
+        patchBodyType: artistResources.artistDataTypeForPatch
+        patchBodyJson: !include examples/artist/requests/artistPatchRequest.json
+        patchResponseType: artistResponses.artistResponseForPatch
+        patchResponseJson: !include examples/artist/responses/artistPatchResponse.json
+        deleteResponseType: artistResponses.artistResponseGeneric
+    get:
+      
+    patch:
+      description: Biographical data is retrieved from last.fm API and the URL to it is updated in the Music Registry for all pertinent members of the group.
+    put:
+    
+    delete:
+
+    /songs:
+      description: Return all of the songs associated with a particular artist
+      is: [commonTraits.clientIdRequired, commonTraits.correlationRequired, commonTraits.errorResponseRequired]
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: artistResponses.artistSongsResponseForGet
+                examples:
+                  example: !include examples/artist/responses/artistSongsResponse.json
+
+/albums:
+  description: The albums resource exposes methods to retrieve and add albums
+  is: [commonTraits.clientIdRequired, commonTraits.correlationRequired, commonTraits.errorResponseRequired]
+  type:
+    collection:
+      getResponseType: albumResponses.albumsResponseForGet
+      getResponseJson: !include examples/album/responses/albumsGetResponse.json 
+      postBodyType: albumResources.albumsDataTypeForInsert
+      postResponseType: albumResponses.albumsResponseForInsert
+      postBodyJson: !include examples/album/requests/albumsAddRequest.json
+      postResponseJson: !include examples/album/responses/albumsAddResponse.json
+  get:
+    is: [albumQueries.queryParams]
+  post:
+
+  /{albumId}:
+    description: The albumId resource exposes methods to retrieve a specific album or update, delete it
+    is: [commonTraits.clientIdRequired, commonTraits.correlationRequired, commonTraits.errorResponseRequired]
+    type:
+      item:
+        getResponseType: albumResponses.albumResponseForGet
+        getResponseJson: !include examples/album/responses/albumGetResponse.json
+        putBodyJson: !include examples/album/requests/albumPutRequest.json
+        putBodyType: albumResources.albumDataTypeForUpdate
+        putResponseType: albumResponses.albumResponseGeneric
+        deleteResponseType: albumResponses.albumResponseGeneric
+    get:
+     
+    put:
+    
+    delete:
+
+  
+
+ 
+    
+

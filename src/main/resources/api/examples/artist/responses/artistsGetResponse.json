@@ -1,0 +1,30 @@
+{
+  "statusCode": 200,
+  "message": "SUCCESS",
+  "searchCriteria": "[groupName: 'Telegraph Canyon', ]",
+  "artists": [
+    {
+      "artistId": 48,
+      "groupName": "Telegraph Canyon",
+      "lastName": "Hickman",
+      "firstName": "Johnny",
+      "dateOfBirth": "1988-01-29"
+    },
+    {
+      "artistId": 49,
+      "groupName": "Telegraph Canyon",
+      "lastName": "Harrison",
+      "firstName": "Teddy",
+      "mi": "B",
+      "dateOfBirth": "1982-03-21",
+      "dateOfDeath": "2015-03-22"
+    },
+    {
+      "artistId": 50,
+      "groupName": "Telegraph Canyon",
+      "lastName": "Hickman",
+      "firstName": "Jack",
+      "dateOfBirth": "1988-01-29"
+    }
+  ]
+}

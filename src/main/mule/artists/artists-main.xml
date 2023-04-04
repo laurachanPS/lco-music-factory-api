@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="put:\artists\(artistId):application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The artist has been updated."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="delete:\artists\(artistId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The artist has been deleted."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="get:\artists:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESS",
+  searchCriteria: "[groupName: 'Telegraph Canyon', ]",
+  artists: [
+    {
+      artistId: 48,
+      groupName: "Telegraph Canyon",
+      lastName: "Hickman",
+      firstName: "Johnny",
+      dateOfBirth: "1988-01-29"
+    }, 
+    {
+      artistId: 49,
+      groupName: "Telegraph Canyon",
+      lastName: "Harrison",
+      firstName: "Teddy",
+      mi: "B",
+      dateOfBirth: "1982-03-21",
+      dateOfDeath: "2015-03-22"
+    }, 
+    {
+      artistId: 50,
+      groupName: "Telegraph Canyon",
+      lastName: "Hickman",
+      firstName: "Jack",
+      dateOfBirth: "1988-01-29"
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="patch:\artists\(artistId):application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 201,
+  message: "SUCCESS",
+  bioUrl: "https://last.fm/music/The Beatles/+wiki",
+  recordsUpdated: 3
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="get:\artists\(artistId)\songs:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESSFUL",
+  artistSongs: [
+    {
+      songTitle: "Hey Jude",
+      publicationDate: "1968-08-26",
+      genre: "Rock",
+      artist: {
+        groupName: "The Beatles",
+        firstName: "John",
+        lastName: "Lennon"
+      }
+    }, 
+    {
+      songTitle: "Magical Mystery Tour",
+      publicationDate: "1967-03-15",
+      genre: "Rock",
+      artist: {
+        groupName: "The Beatles",
+        firstName: "John",
+        lastName: "Lennon"
+      }
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="post:\artists:application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 202,
+  message: "ACCEPTED",
+  results: {
+    addedCounts: 1,
+    addedArtists: [
+      {
+        artistId: 51,
+        groupName: "Telegraph Canyon",
+        lastName: "Hickman",
+        firstName: "Jill",
+        dateOfBirth: "1988-01-29"
+      }
+    ],
+    duplicatedCounts: 1,
+    duplicatedArtists: [
+      {
+        artistId: 49,
+        groupName: "Telegraph Canyon",
+        lastName: "Harrison",
+        firstName: "Ted",
+        mi: "B",
+        dateOfBirth: "1982-03-21"
+      }
+    ]
+  }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="get:\artists\(artistId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESSFUL",
+  artist: {
+    groupName: "Grateful Dead",
+    firstName: "Garcia",
+    lastName: "Gerry",
+    dateOfBirth: "1948-01-07"
+  }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	</mule>

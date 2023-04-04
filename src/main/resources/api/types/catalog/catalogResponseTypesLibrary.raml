@@ -1,0 +1,47 @@
+#%RAML 1.0 Library
+usage: Used as the source of resources dataTypes related to the catalog
+types:
+  albums:
+    type: array
+    items: !include ../album/albumDataType.raml
+  songs:
+    type: array
+    items: !include ../song/songDataType.raml
+  artists:
+    type: array
+    items: !include ../artist/artistDataType.raml
+  songWriters:
+    type: array
+    items: !include ../song/songWriterDataType.raml
+
+  catalogResponseForGet:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        required: true
+      message:
+        type: string
+        required: true
+      catalog:
+        type: array
+        items:
+          properties:
+            artists: 
+              type: array
+              required: false
+              items: 
+                type: artists
+            songs:
+              type: array
+              required: false
+              items: 
+                properties:
+                  type: songs
+                  songWriters:
+                    type: array
+                    required: false
+                    items:
+                      type: songWriters

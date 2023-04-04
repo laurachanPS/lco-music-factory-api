@@ -1,0 +1,24 @@
+#%RAML 1.0 Library
+traits:
+  queryParams:
+    queryParameters:
+      songTitle:
+        description: "Part of all of a song title to search on."
+        required: true
+        minLength: 3
+        type: string
+        example: "Kil"
+      genre:
+        description: "The genre of music"
+        required: false
+        type: string
+        enum:
+          - Rock
+          - Classical
+          - HipHop
+          - Jazz
+          - Country
+          - Pop
+          - Metal
+          - Mariachi
+          - Other

@@ -1,0 +1,61 @@
+#%RAML 1.0 Library
+usage: Used as the source of resources dataTypes related to the album
+types:
+
+  albumsResponseForGet:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        required: true
+      message:
+        type: string
+        required: true
+      albums:
+        required: true
+        type: array
+        items: !include albumDataType.raml
+    
+  albumResponseGeneric:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+      message:
+        type: string
+        required: true
+
+
+  albumsResponseForInsert:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+      message:
+        type: string
+        required: true
+      albums:
+        required: true
+        type: array
+        items: !include albumDataType.raml
+
+  albumResponseForGet:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        required: true
+      message:
+        type: string
+        required: true
+      album:
+        required: true
+        type: !include albumDataType.raml

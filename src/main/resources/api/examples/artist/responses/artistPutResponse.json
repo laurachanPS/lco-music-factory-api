@@ -1,0 +1,12 @@
+{
+  "statusCode": 201,
+  "message": "SUCCESS",
+  "artist": {
+      "groupName": "Telegraph Canyon",
+      "lastName": "Hickman",
+      "firstName": "Johnny",
+      "mi": "J",
+      "dateOfBirth": "1988-01-29",
+      "dateOfDeath": ""
+    }
+}

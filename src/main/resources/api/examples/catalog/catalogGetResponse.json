@@ -1,0 +1,164 @@
+{
+  "statusCode": 200,
+  "message": "SUCCESS",
+  "catalog": [
+    {
+      "album": {
+        "albumTitle": "The Beatles",
+        "publicationDate": "1968-11-22",
+        "groupName": "The Beatles",
+        "artists": [
+          {
+            "firstName": "John",
+            "lastName": "Lennon",
+            "dateOfBirth": "1940-10-09",
+            "dateOfDeath": "1980-12-08"
+          },
+          {
+            "firstName": "Paul",
+            "lastName": "McCartney",
+            "dateOfBirth": "1942-02-16"
+          },
+          {
+            "firstName": "George",
+            "lastName": "Harrison",
+            "dateOfBirth": "1943-03-25",
+            "dateOfDeath": "2001-11-29"
+          }
+        ],
+        "songs": [
+          {
+          "songTitle": "Back in the U.S.S.R",
+          "genre": "Rock",
+          "songDuration": "3:36",
+          "songWriters": [
+            {
+              "writer": "Paul McCartney"
+            }
+          ]
+        },
+        {
+          "songTitle": "Dear Prudence",
+          "genre": "Rock",
+          "duration": "3:54",
+          "songWriters": [
+            {
+              "writer": "John Lennon"
+            }  
+          ]
+        },
+        {
+          "songTitle": "Glass Onion",
+          "genre": "Rock",
+          "duration": "3:48",
+          "songWriters": [
+            {
+              "writer": "John Lennon"
+            }
+          ]
+        },
+        {
+          "songTitle": "Ob-La-Di, Ob-La-Da",
+          "genre": "Rock",
+          "duration": "3:38",
+          "songWriters": [
+            {
+              "writer": "Paul McCartney"
+            }
+          ]
+        },
+        {
+          "songTitle": "Wild Honey Pie",
+          "genre": "Rock",
+          "duration": "2:26",
+          "songWriters": [
+            {
+              "writer": "Paul McCartney"
+            }
+          ]
+        }
+      ]
+    }
+  },
+    {
+      "album": {
+        "albumTitle": "Let it Be",
+        "publicationDate": "1970-05-08",
+        "groupName": "The Beatles",
+        "artists": [
+          {
+            "firstName": "John",
+            "lastName": "Lennon",
+            "dateOfBirth": "1940-10-09",
+            "dateOfDeath": "1980-12-08"
+          },
+          {
+            "firstName": "Paul",
+            "lastName": "McCartney",
+            "dateOfBirth": "1942-02-16"
+          },
+          {
+            "firstName": "George",
+            "lastName": "Harrison",
+            "dateOfBirth": "1943-03-25",
+            "dateOfDeath": "2001-11-29"
+          }
+        ],
+        "songs": [
+          {
+          "songTitle": "Two of Us",
+          "genre": "Rock",
+          "songDuration": "3:36",
+          "songWriters": [
+            {
+              "writer": "John Lennon"
+            }
+          ]
+        },
+        {
+          "songTitle": "Dig A Pony",
+          "genre": "Rock",
+          "duration": "3:54",
+          "songWriters": [
+            {
+              "writer": "John Lennon"
+            }  
+          ]
+        },
+        {
+          "songTitle": "Across the Universe",
+          "genre": "Rock",
+          "duration": "3:48",
+          "songWriters": [
+            {
+              "writer": "John Lennon"
+            },
+            {
+              "writer": "Paul McCartney"
+            }
+          ]
+        },
+        {
+          "songTitle": "The Long and Winding Road",
+          "genre": "Rock",
+          "duration": "3:38",
+          "songWriters": [
+            {
+              "writer": "John Lennon"
+            }
+          ]
+        },
+        {
+          "songTitle": "I Me Mine",
+          "genre": "Rock",
+          "duration": "2:26",
+          "songWriters": [
+            {
+              "writer": "George Harrison"
+            }
+          ]
+        }
+      ]
+    }
+  }  ]
+}  

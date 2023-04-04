@@ -1,0 +1,23 @@
+{
+  "statusCode": 201,
+  "message": "SUCCESS",
+  "albums": [
+    {
+      "albumId": 1001,
+      "albumTitle": "Telegraph Canyon I",
+      "genre": "Pop",
+      "publicationDate": "2016-01-29",
+      "artistId": 5,
+      "artistName" : "His Majesty"
+    },
+    {
+      "albumId": 1002,
+      "albumTitle": "Telegraph Canyon II",
+      "genre": "Pop",
+      "publicationDate": "2018-01-29",
+      "artistId": 5,
+      "artistName" : "Prince"
+
+    }
+  ]
+}

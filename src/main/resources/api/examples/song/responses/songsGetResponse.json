@@ -1,0 +1,35 @@
+{
+  "statusCode": 200,
+  "message": "SUCCESSFUL",
+  "searchCriteria": "Kill",
+  "songs": [
+    {
+      "songId" : 13,
+      "songTitle": "I May Kill Myself",
+      "genre":     "Other",
+      "publicationDate": "1942-01-02",
+      "duration":  "13:52",
+      "albumId": 8,
+      "albumName": "Harry Belts a Tune",
+      "songWriters": [
+        {
+          "writer": "Harry Carry"
+        }
+      ]
+    },
+    {
+      "songId" : 13,
+      "songTitle": "Don't Kill Yourself",
+      "genre":     "Rock",
+      "publicationDate": "1951-01-02",
+      "duration":  "13:52",
+      "albumId": 8,
+      "albumName": "Saving A Life Today",
+      "songWriters": [
+        {
+          "writer": "Will Meaning"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "songs": [
+    {
+      "songTitle": "Como Anda La Cucaracha",
+      "publicationDate": "1954-01-07",
+      "duration": "4:29",
+      "genre": "Mariachi",
+      "albumId": 6,
+      "artistId" : 101
+    },
+    {
+      "songTitle": "La Bamba",
+      "publicationDate": "1959-03-30",
+      "duration": "3:52",
+      "genre": "Other",
+      "albumId": 7,
+      "artistId" : 102
+    }
+  ]
+}

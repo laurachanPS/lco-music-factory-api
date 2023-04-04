@@ -1,0 +1,108 @@
+#%RAML 1.0 Library
+usage: Used as the source of resources dataTypes related to the artist
+types:
+
+  artistsResponseForGet:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        required: true
+      message:
+        type: string
+        required: true
+      artists:
+        required: true
+        type: array
+        items: !include artistDataType.raml
+
+  artistSongsResponseForGet:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        required: true
+      message:
+        type: string
+        required: true
+      artistSongs:
+        required: true
+        type: array
+        items: !include ../song/songDataType.raml
+    
+  artistResponseGeneric:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+      message:
+        type: string
+        required: true
+
+
+  artistsResponseForInsert:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+      message:
+        type: string
+        required: true
+      results:
+        required: true
+        properties:
+          addedCounts: 
+            type: number
+            required: true
+          addedArtists:
+            type: array
+            required: false
+            items: !include artistDataType.raml
+          duplicatedCounts:
+            type: number
+            required: true
+          duplicatedArtists: 
+            type: array
+            required: false
+            items: !include artistDataType.raml
+            
+  artistResponseForGet:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        required: true
+      message:
+        type: string
+        required: true
+      artist:
+        required: true
+        type: !include artistDataType.raml
+
+  artistResponseForPatch:
+    type: object
+    properties: 
+      statusCode:
+        type: number
+        minimum: 100
+        maximum: 599
+        required: true
+      message:
+        type: string
+        required: true
+      bioUrl:
+        required: true
+        type: string
+      recordsUpdated:
+        required: true
+        type: number

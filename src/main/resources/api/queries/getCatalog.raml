@@ -1,0 +1,10 @@
+#%RAML 1.0 Library
+traits:
+  queryParams:
+    queryParameters:
+      groupName:
+        description: "Part of all of the artist group name to search."
+        required: true
+        minLength: 3
+        type: string
+        example: "The Beatles"

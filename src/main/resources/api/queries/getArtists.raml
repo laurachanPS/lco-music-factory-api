@@ -1,0 +1,33 @@
+#%RAML 1.0 Library
+traits:
+  queryParams:
+    queryParameters:
+      lastName:
+        description: "Part of all of the artist's last name to search on."
+        required: false
+        minLength: 3
+        type: string
+        example: "Hickman"
+      firstName:
+        description: "Part of all of the artist's first name to search on."
+        required: false
+        minLength: 3
+        type: string
+        example: "John"
+      dateOfBirth:
+        description: "Artist's date of birth."
+        required: false
+        type: date-only
+        example: 1962-06-13
+      artistName:
+        description: "Part of all of the artist's name to search on."
+        required: false
+        minLength: 3
+        type: string
+        example: "Telegraph Canyon"
+      groupName:
+        description: "Part of all of the group's name to search on."
+        required: false
+        minLength: 3
+        type: string
+        example: "Beatles"

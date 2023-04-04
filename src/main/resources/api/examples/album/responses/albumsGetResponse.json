@@ -1,0 +1,23 @@
+{
+  "statusCode": 200,
+  "message": "SUCCESS",
+  "searchCriteria": "Let it Be",
+  "albums": [
+    {
+      "albumId": 1,
+      "albumTitle": "The Beatles",
+      "genre": "Rock",
+      "publicationDate": "1968-11-22",
+      "artistId": 1,
+      "groupName": "The Beatles"
+    },
+    {
+      "albumId": 4,
+      "albumTitle": "Let It Be",
+      "genre": "Rock",
+      "publicationDate": "2000-05-08",
+      "artistId": 1,
+      "groupName": "The Beatles"
+    }
+  ]
+}

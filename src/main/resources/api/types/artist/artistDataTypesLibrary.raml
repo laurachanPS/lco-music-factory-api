@@ -1,0 +1,36 @@
+#%RAML 1.0 Library
+types:
+
+  artistsDataTypeForGet:
+    type: object
+    properties: 
+      artists:
+        required: true
+        type: array
+        items: !include artistDataType.raml
+
+  artistDataType:
+    type: !include artistDataType.raml
+    
+  artistsDataTypeForInsert:
+    type: object
+    properties: 
+      artists:
+        required: true
+        type: array
+        items: !include artistDataType.raml
+
+  artistDataTypeForUpdate:
+    type: object
+    properties: 
+      artist:
+        required: true
+        type: !include artistDataType.raml
+
+  artistDataTypeForPatch:
+    type: object
+    properties: 
+      groupName:
+        required: true
+        type: string
+        

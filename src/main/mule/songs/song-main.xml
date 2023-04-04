@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="put:\songs\(songId):application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="songId">attributes.uriParams.'songId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The song has been updated."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="delete:\songs\(songId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="songId">attributes.uriParams.'songId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The song has been deleted."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="get:\songs:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESSFUL",
+  searchCriteria: "Kill",
+  songs: [
+    {
+      songId: 13,
+      songTitle: "I May Kill Myself",
+      genre: "Other",
+      publicationDate: "1942-01-02",
+      duration: "13:52",
+      albumId: 8,
+      albumName: "Harry Belts a Tune",
+      songWriters: [
+        {
+          writer: "Harry Carry"
+        }
+      ]
+    }, 
+    {
+      songId: 13,
+      songTitle: "Don't Kill Yourself",
+      genre: "Rock",
+      publicationDate: "1951-01-02",
+      duration: "13:52",
+      albumId: 8,
+      albumName: "Saving A Life Today",
+      songWriters: [
+        {
+          writer: "Will Meaning"
+        }
+      ]
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="get:\songs\(songId):lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="songId">attributes.uriParams.'songId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "SUCCESS",
+  song: {
+    songTitle: "Don't Mess With Texas",
+    publicationDate: "2016-10-05",
+    genre: "Pop",
+    duration: "3:15",
+    songId: 15,
+    artistId: 5,
+    songWriters: [
+      {
+        writer: "Ted Cruz"
+      }, 
+      {
+        writer: "Greg Abbott"
+      }
+    ]
+  }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="post:\songs:application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 201,
+  message: "SUCCESS",
+  songs: [
+    {
+      songTitle: "Como Anda La Cucaracha",
+      publicationDate: "1954-01-07",
+      duration: "4:29",
+      genre: "Mariachi",
+      albumId: 6,
+      artistId: 101
+    }, 
+    {
+      songTitle: "La Bamba",
+      publicationDate: "1959-03-30",
+      duration: "3:52",
+      genre: "Other",
+      albumId: 7,
+      artistId: 102
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow></mule>

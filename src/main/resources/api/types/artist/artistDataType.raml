@@ -1,0 +1,42 @@
+#%RAML 1.0 DataType
+type: object
+properties: 
+  artistId:
+    type: number
+    required: false  
+  groupName:
+    type: string
+    minLength: 3
+    maxLength: 100
+    required: true
+  firstName:
+    type: string
+    minLength: 3
+    maxLength: 100
+    required: false
+  lastName:
+    type: string
+    minLength: 3
+    maxLength: 100
+    required: false
+  mi:
+    type: string
+    required: false
+    minLength: 1
+    maxLength: 1   
+  dateOfBirth:
+    type: date-only
+    required: false
+  dateOfDeath:
+    type: date-only
+    required: false
+  bioUrl:
+    type: string
+    required: false
+    minLength: 3
+    maxLength: 256   
+  imageUrl:
+    type: string
+    required: false
+    minLength: 3
+    maxLength: 256   
