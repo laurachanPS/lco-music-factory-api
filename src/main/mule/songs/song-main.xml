@@ -23,7 +23,7 @@ output application/json
             </ee:message>
         </ee:transform>
     </flow>
-    <flow name="delete:\songs\(songId):lco-music-factory-api-config">
+	<flow name="delete:\songs\(songId):lco-music-factory-api-config">
         <ee:transform>
             <ee:variables>
                 <ee:set-variable variableName="songId">attributes.uriParams.'songId'</ee:set-variable>
@@ -42,7 +42,9 @@ output application/json
         </ee:transform>
     </flow>
 	<flow name="get:\songs:lco-music-factory-api-config">
-        <ee:transform>
+        <set-variable value="song-main::impl-get-songs" doc:name="currentFlow" doc:id="fc74e1e5-150d-49f6-a024-fe7a2284f400" variableName="currentFlow" />
+		<flow-ref doc:name="Flow Reference" doc:id="a1b0db92-2a25-4483-9423-403a25de8909" name="impl-get-songs"/>
+		<ee:transform>
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -84,7 +86,8 @@ output application/json
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
-    </flow>
+    
+</flow>
 	<flow name="get:\songs\(songId):lco-music-factory-api-config">
         <ee:transform>
             <ee:variables>

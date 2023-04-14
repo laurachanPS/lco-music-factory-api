@@ -4,26 +4,10 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<flow name="put:\albums\(albumId):application\json:lco-music-factory-api-config">
-        <ee:transform>
-            <ee:variables>
-                <ee:set-variable variableName="albumId">attributes.uriParams.'albumId'</ee:set-variable>
-            </ee:variables>
-        </ee:transform>
-        <ee:transform>
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  statusCode: 200,
-  message: "The album has been updated."
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-    </flow>
-    <flow name="get:\albums:lco-music-factory-api-config">
-        <ee:transform>
+	<flow name="get:\albums:lco-music-factory-api-config">
+        <set-variable value="albums-main::impl-get-albums" doc:name="currentFlow" doc:id="95b86cbc-27e5-4e88-abed-a1f81f644170" variableName="currentFlow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="a83348b9-aaa5-41af-8c92-bad5f6829207" name="impl-get-albums"/>
+		<ee:transform>
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -50,6 +34,57 @@ output application/json
       groupName: "The Beatles"
     }
   ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="post:\albums:application\json:lco-music-factory-api-config">
+        <set-variable value="albums-main::impl-add-albums" doc:name="currentFlow" doc:id="d0d457ae-feb2-4235-8b14-d91e55cb8dbf" variableName="currentFlow" />
+		<flow-ref doc:name="Flow Reference" doc:id="40ab62fa-52bd-4a0c-9d44-19e8d1aed19d" name="impl-add-albums"/>
+		<ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 201,
+  message: "SUCCESS",
+  albums: [
+    {
+      albumId: 1001,
+      albumTitle: "Telegraph Canyon I",
+      genre: "Pop",
+      publicationDate: "2016-01-29",
+      artistId: 5,
+      artistName: "His Majesty"
+    }, 
+    {
+      albumId: 1002,
+      albumTitle: "Telegraph Canyon II",
+      genre: "Pop",
+      publicationDate: "2018-01-29",
+      artistId: 5,
+      artistName: "Prince"
+    }
+  ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="put:\albums\(albumId):application\json:lco-music-factory-api-config">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="albumId">attributes.uriParams.'albumId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  statusCode: 200,
+  message: "The album has been updated."
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
@@ -93,37 +128,6 @@ output application/json
     artistId: 1,
     artistName: "The Beatles"
   }
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-    </flow>
-	<flow name="post:\albums:application\json:lco-music-factory-api-config">
-        <ee:transform>
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  statusCode: 201,
-  message: "SUCCESS",
-  albums: [
-    {
-      albumId: 1001,
-      albumTitle: "Telegraph Canyon I",
-      genre: "Pop",
-      publicationDate: "2016-01-29",
-      artistId: 5,
-      artistName: "His Majesty"
-    }, 
-    {
-      albumId: 1002,
-      albumTitle: "Telegraph Canyon II",
-      genre: "Pop",
-      publicationDate: "2018-01-29",
-      artistId: 5,
-      artistName: "Prince"
-    }
-  ]
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>

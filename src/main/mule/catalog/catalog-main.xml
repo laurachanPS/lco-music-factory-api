@@ -6,7 +6,9 @@
 	xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 	<flow name="get:\catalog:lco-music-factory-api-config">
-        <ee:transform>
+        <set-variable value="catalog-main::impl-get-catalog" doc:name="currentFlow" doc:id="1a61dec0-ce8f-424f-8d27-a21ba4a9ba69" variableName="currentFlow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="35367a20-08b0-40c7-ae70-97d4446520b3" name="impl-get-catalog"/>
+		<ee:transform>
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
