@@ -5,6 +5,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="get:\songs:lco-music-factory-api-config">
+        <set-variable value="song-main::impl-get-songs" doc:name="currentFlow" doc:id="fc74e1e5-150d-49f6-a024-fe7a2284f400" variableName="currentFlow" />
+		<flow-ref doc:name="Flow Reference" doc:id="a1b0db92-2a25-4483-9423-403a25de8909" name="impl-get-songs" />
+    
+</flow>
 	<flow name="put:\songs\(songId):application\json:lco-music-factory-api-config">
         <ee:transform>
             <ee:variables>
@@ -41,53 +46,6 @@ output application/json
             </ee:message>
         </ee:transform>
     </flow>
-	<flow name="get:\songs:lco-music-factory-api-config">
-        <set-variable value="song-main::impl-get-songs" doc:name="currentFlow" doc:id="fc74e1e5-150d-49f6-a024-fe7a2284f400" variableName="currentFlow" />
-		<flow-ref doc:name="Flow Reference" doc:id="a1b0db92-2a25-4483-9423-403a25de8909" name="impl-get-songs"/>
-		<ee:transform>
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  statusCode: 200,
-  message: "SUCCESSFUL",
-  searchCriteria: "Kill",
-  songs: [
-    {
-      songId: 13,
-      songTitle: "I May Kill Myself",
-      genre: "Other",
-      publicationDate: "1942-01-02",
-      duration: "13:52",
-      albumId: 8,
-      albumName: "Harry Belts a Tune",
-      songWriters: [
-        {
-          writer: "Harry Carry"
-        }
-      ]
-    }, 
-    {
-      songId: 13,
-      songTitle: "Don't Kill Yourself",
-      genre: "Rock",
-      publicationDate: "1951-01-02",
-      duration: "13:52",
-      albumId: 8,
-      albumName: "Saving A Life Today",
-      songWriters: [
-        {
-          writer: "Will Meaning"
-        }
-      ]
-    }
-  ]
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-    
-</flow>
 	<flow name="get:\songs\(songId):lco-music-factory-api-config">
         <ee:transform>
             <ee:variables>

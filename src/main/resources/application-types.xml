@@ -1,4 +1,78 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
-  <types:catalog/>
+  <types:catalog>
+    <types:type name="albums" format="json">
+      <types:shape format="weave" example="api/examples/album/responses/albumGetResponse.json"><![CDATA[%dw 2.0
+
+type albums = {|
+  statusCode: Number {"typeId": "int"}, 
+  message: String, 
+  album: {|
+    albumTitle: String, 
+    genre: String, 
+    publicationDate: String, 
+    artistId: Number {"typeId": "int"}, 
+    artistName: String
+  |}
+|} {"example": "{\\\"statusCode\\\":200,\\\"message\\\":\\\"SUCCESS\\\",\\\"album\\\":{\\\"albumTitle\\\":\\\"Let It Be (CD)\\\",\\\"genre\\\":\\\"Rock\\\",\\\"publicationDate\\\":\\\"2000-05-18\\\",\\\"artistId\\\":1,\\\"artistName\\\":\\\"The Beatles\\\"}}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="artists" format="json">
+      <types:shape format="weave" example="api/examples/artist/responses/artistGetResponse.json"><![CDATA[%dw 2.0
+
+type artists = {|
+  statusCode: Number {"typeId": "int"}, 
+  message: String, 
+  artist: {|
+    groupName: String, 
+    firstName: String, 
+    lastName: String, 
+    dateOfBirth: String
+  |}
+|} {"example": "{\\\"statusCode\\\":200,\\\"message\\\":\\\"SUCCESSFUL\\\",\\\"artist\\\":{\\\"groupName\\\":\\\"Grateful Dead\\\",\\\"firstName\\\":\\\"Garcia\\\",\\\"lastName\\\":\\\"Gerry\\\",\\\"dateOfBirth\\\":\\\"1948-01-07\\\"}}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="song" format="json">
+      <types:shape format="weave" example="api/examples/song/responses/songsGetResponse.json"><![CDATA[%dw 2.0
+
+type song = {|
+  statusCode: Number {"typeId": "int"}, 
+  message: String, 
+  searchCriteria: String, 
+  songs: Array<{|    songId: Number {"typeId": "int"},     songTitle: String,     genre: String,     publicationDate: String,     duration: String,     albumId: Number {"typeId": "int"},     albumName: String,     songWriters: Array<{| writer: String |}>
+  |}>
+|} {"example": "{\\\"statusCode\\\":200,\\\"message\\\":\\\"SUCCESSFUL\\\",\\\"searchCriteria\\\":\\\"Kill\\\",\\\"songs\\\":[{\\\"songId\\\":13,\\\"songTitle\\\":\\\"I May Kill Myself\\\",\\\"genre\\\":\\\"Other\\\",\\\"publicationDate\\\":\\\"1942-01-02\\\",\\\"duration\\\":\\\"13:52\\\",\\\"albumId\\\":8,\\\"albumName\\\":\\\"Harry Belts a Tune\\\",\\\"songWriters\\\":[{\\\"writer\\\":\\\"Harry Carry\\\"}]},{\\\"songId\\\":13,\\\"songTitle\\\":\\\"Don't Kill Yourself\\\",\\\"genre\\\":\\\"Rock\\\",\\\"publicationDate\\\":\\\"1951-01-02\\\",\\\"duration\\\":\\\"13:52\\\",\\\"albumId\\\":8,\\\"albumName\\\":\\\"Saving A Life Today\\\",\\\"songWriters\\\":[{\\\"writer\\\":\\\"Will Meaning\\\"}]}]}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#fad47352-8645-4608-a3b9-a357c7f4f61c">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="albums"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#15b5673c-3289-406e-9de2-6798d39ebe25">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="artists"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#b8b68143-7bd0-491b-b262-252d453af761">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="song"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
 </types:mule>

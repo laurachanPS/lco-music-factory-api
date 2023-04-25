@@ -5,13 +5,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="get:\artists:lco-music-factory-api-config">
+        <set-variable value="artists-main::impl-get-artists" doc:name="currentFlow" doc:id="971dad36-1ddb-4c74-9c6a-f51aea651f1e" variableName="currentFlow" />
+		<flow-ref doc:name="Flow Reference" doc:id="6df69566-7300-4522-9c57-097925cf06dc" name="impl-get-artists" />
+    </flow>
 	<flow name="put:\artists\(artistId):application\json:lco-music-factory-api-config">
         <ee:transform>
             <ee:variables>
                 <ee:set-variable variableName="artistId">attributes.uriParams.'artistId'</ee:set-variable>
             </ee:variables>
         </ee:transform>
-        <ee:transform>
+		<ee:transform>
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -22,7 +26,8 @@ output application/json
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
-    </flow>
+    
+</flow>
 	<flow name="delete:\artists\(artistId):lco-music-factory-api-config">
         <ee:transform>
             <ee:variables>
@@ -37,47 +42,6 @@ output application/json
 {
   statusCode: 200,
   message: "The artist has been deleted."
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-    </flow>
-	<flow name="get:\artists:lco-music-factory-api-config">
-        <set-variable value="artists-main::impl-get-artists" doc:name="currentFlow" doc:id="971dad36-1ddb-4c74-9c6a-f51aea651f1e" variableName="currentFlow"/>
-		<flow-ref doc:name="Flow Reference" doc:id="6df69566-7300-4522-9c57-097925cf06dc" name="impl-get-artists"/>
-		<ee:transform>
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  statusCode: 200,
-  message: "SUCCESS",
-  searchCriteria: "[groupName: 'Telegraph Canyon', ]",
-  artists: [
-    {
-      artistId: 48,
-      groupName: "Telegraph Canyon",
-      lastName: "Hickman",
-      firstName: "Johnny",
-      dateOfBirth: "1988-01-29"
-    }, 
-    {
-      artistId: 49,
-      groupName: "Telegraph Canyon",
-      lastName: "Harrison",
-      firstName: "Teddy",
-      mi: "B",
-      dateOfBirth: "1982-03-21",
-      dateOfDeath: "2015-03-22"
-    }, 
-    {
-      artistId: 50,
-      groupName: "Telegraph Canyon",
-      lastName: "Hickman",
-      firstName: "Jack",
-      dateOfBirth: "1988-01-29"
-    }
-  ]
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>

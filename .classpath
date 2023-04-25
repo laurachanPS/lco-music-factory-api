@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="con" path="org.mule.tooling.MULE_PROJECT_LIB"/>
+	<classpathentry kind="con" path="MULE_LIB/org.mule.connectors/mule-db-connector/1.13.6"/>
 	<classpathentry kind="con" path="org.mule.tooling.API_SPEC_LIB/e17da99a-7d16-4c7a-a30e-cc8d62cfac3e/lco-music-factory-api/1.0.0"/>
 	<classpathentry kind="con" path="MULE_LIB/com.puntosingular.soluciones/sps-logger/1.2.2"/>
 	<classpathentry kind="con" path="MULE_LIB/org.mule.modules/mule-apikit-module/1.3.7"/>
