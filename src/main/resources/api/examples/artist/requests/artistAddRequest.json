@@ -1,0 +1,11 @@
+{
+  "artist": {
+    "artistId": 0,
+    "groupName": "The Grateful Dead",
+    "lastName": "Garcia",
+    "firstName": "Gerry",
+    "mi" : "E",
+    "dateOfBirth": "1982-03-21",
+    "dateOfDeath": "2019-03-21"
+  }
+}

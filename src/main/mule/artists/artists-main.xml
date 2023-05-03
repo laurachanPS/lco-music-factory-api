@@ -49,40 +49,6 @@ output application/json
 	<flow name="post:\artists:application\json:lco-music-factory-api-config">
         <set-variable value="artists-main::impl-add-artists" doc:name="currentFlow" doc:id="0d26bc68-ab47-4b0c-9c43-de4ca049da97" variableName="currentFlow" />
 		<flow-ref doc:name="Flow Reference" doc:id="4c2e5250-27c0-4e7a-b3b2-7b355f15dc4b" name="impl-add-artists" />
-		<ee:transform>
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  statusCode: 202,
-  message: "ACCEPTED",
-  results: {
-    addedCounts: 1,
-    addedArtists: [
-      {
-        artistId: 51,
-        groupName: "Telegraph Canyon",
-        lastName: "Hickman",
-        firstName: "Jill",
-        dateOfBirth: "1988-01-29"
-      }
-    ],
-    duplicatedCounts: 1,
-    duplicatedArtists: [
-      {
-        artistId: 49,
-        groupName: "Telegraph Canyon",
-        lastName: "Harrison",
-        firstName: "Ted",
-        mi: "B",
-        dateOfBirth: "1982-03-21"
-      }
-    ]
-  }
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
     
 </flow>
 	<flow name="patch:\artists\(artistId):application\json:lco-music-factory-api-config">
